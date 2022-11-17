@@ -1,0 +1,78 @@
+
+.main-div{
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+}
+.welcomepage{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: min(80%,330px);
+    height: 60%;
+    position: relative;
+    /* box-shadow: 0px 0px 5px 5px #0000ff2e; */
+    border-radius: 20px;
+    background-color: #F6F8FA;
+    border: 1px solid hsla(210,18%,83%,1);
+    
+}
+.welcomepage form{
+    display: flex;
+    flex-direction: column;
+    width: min(80%, 280px);
+    height: 73%;
+}
+.welcomeh1{
+    display: flex;
+    text-align: center;
+}
+h1{
+    font-size: clamp(1.5rem,5vw,3rem);
+}
+.welcomepage form > *{
+    border-radius: 5px;
+
+}
+.welcomepage label{
+    margin-top: 10px;
+}
+#submitbtn{
+    margin-top: 50px;
+    color: white;
+    font-size: 18px;
+    font-weight: 500;
+    width: 100%;
+    border: none;
+    /* box-shadow: 0px 0px 6px 2px #0000ff; */
+    cursor: pointer;
+    background: green;
+}
+#submitbtn:hover{
+    background-color: #008000cc;
+}
+.welcomepage p{
+    color: red;
+    text-shadow: 0px 0px 1px red;
+}
+.welcomepage input{
+    border: 1px solid hsla(210,18%,83%,1);
+    height: 35px;
+
+}
+.welcomepage input:focus{
+    color: black;
+    font-weight: 500;
+    outline: none;
+    box-shadow: 0px 0px 0px 1px rgb(3 146 212);  
+    border: 1px solid rgb(3, 146, 212);
+  }
+  .profileicon{
+    font-size: clamp(2.5rem,6vw,3rem);
+    color: #000000d1;
+  }
