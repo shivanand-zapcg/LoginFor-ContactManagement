@@ -1,4 +1,6 @@
-
+body{
+    background-color: white;
+}
 .main-div{
     align-items: center;
     justify-content: center;

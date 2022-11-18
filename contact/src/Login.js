@@ -1,8 +1,7 @@
 import { useState, useRef,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { CgProfile} from "react-icons/cg";
-import Loginpage from "./Login.css";
-import index from "./index.css";
+import Loginpage from "./Loginpage.css";
 const Login = () => {
   const navigate = useNavigate();
   const [username, setusername] = useState("");
@@ -23,27 +22,6 @@ const Login = () => {
     fetchData()
   }, [])
   
-
-  const submitAuthor = async () => {
-    const myData = {
-        "passengerName": "pankaj",
-        "fromStation": "123",
-        "toStation": "123",
-        "dateOfJourney": "12/12/2022",
-        "trainNo": "123"
-    }
-
-    const result = await fetch('http://localhost:8080/irctc/ticket/new', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(myData)
-    })
-
-    const resultInJson = await result.json()
-    setAuthors(prev => [...prev, resultInJson])
-  }
   const handleSubmit = (e) => {
     e.preventDefault();
    if(true){
