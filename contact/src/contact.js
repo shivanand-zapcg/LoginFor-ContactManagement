@@ -5,15 +5,14 @@ import contact from "./Contact.css";
 
 
 
-const Contact = (x)=>{
+const Contact = ()=>{
     const navigate = useNavigate();
     const [contactName, setContactName] = useState("");
     const [contactId, setContactId] = useState("");
     const [contactEmail, setContactEmail] = useState("");
     const [contactNumber, setContactNumber] = useState("");
 
-    const DisplayAllContacts = async (x)=>{
-        x.preventDefault();
+    const DisplayAllContacts = async ()=>{
         navigate("/allContact");
     }
     const savecontact = async (e) =>{

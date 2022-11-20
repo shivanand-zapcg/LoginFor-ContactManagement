@@ -40,15 +40,9 @@ public class ContactController {
 		}
 	}
 	@CrossOrigin
-	@RequestMapping(value = "/edit/{id}", consumes = {"application/json"})
-	public ResponseEntity<?> editContact(@PathVariable(value = "id") String id ){
-		Contact contact= null;
-		try {
-			contact = conRepo.findById(id).get();
-		}catch (Exception e) {
-			System.out.println(e.toString());
-		}
-		if(contact!=null) {
+	@RequestMapping(value = "/edit", consumes = {"application/json"})
+	public ResponseEntity<?> editContact(@RequestBody @Valid Contact contact, BindingResult result){
+		if(conRepo.existsById(contact.getContactId()) && !result.hasErrors()) {
 			conRepo.save(contact);
 			return new ResponseEntity<Contact>(contact, HttpStatus.OK);
 		}else

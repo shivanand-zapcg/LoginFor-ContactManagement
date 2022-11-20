@@ -1,5 +1,5 @@
 import { useState, useRef,useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { json, useNavigate } from "react-router-dom";
 import { CgProfile} from "react-icons/cg";
 import Loginpage from "./Loginpage.css";
 const Login = () => {
@@ -18,9 +18,25 @@ const Login = () => {
       const jsonResult = await result.json()
       setAuthors(jsonResult)
     }
-
     fetchData()
   }, [])
+  const myData={
+    "username":username,
+    "password":password
+  }
+  
+  // const [jwt , setJwt] = useState("")
+  //  const token = async ()=>{
+  //   await fetch("http://localhost:9090/authenticate",{
+  //     method: 'POST',
+  //     headers :{
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify(myData)
+  //   }).then((response) => console.log(response))
+  //   .then((result) => setJwt(result))
+  //   console.log(jwt)
+  //  }
   
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -44,12 +60,13 @@ const Login = () => {
    }
   };
 
+ 
   return (
     <div className="main-div">
       <div className="welcomeh1"><h1>Welcome Back</h1></div>
       <div className="profileicon"><CgProfile/></div>
     <div className="welcomepage">
-      
+     
       <form onSubmit={handleSubmit}>
         <label>Username</label>
         <input

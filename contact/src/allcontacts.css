@@ -19,3 +19,57 @@
 .container th {
 	text-align: left;
 }
+#popup {
+    height: 100px;
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    display: none;
+    position: relative;
+  }
+  #popup input{
+    margin-top: 30px;
+    margin-left: 21px;
+    width: 200px;
+  }
+  #close {
+    position: absolute;
+    right: 30px;
+    top: 10px;
+    background: white;
+    border: none;
+    font-size: 20px;
+	cursor: pointer;
+  }
+  #close:hover{
+    color: red;
+  }
+  .main-pop {
+    display: none;
+    position: absolute;
+    /* display: flex; */
+    top: 0;
+    justify-content: center;
+    left: 10%;
+    width: 80%;
+    opacity: 1;
+    border: 2px solid red;
+    height: 150px;
+    background-color: white;
+    border-radius: 20px;
+
+  }
+  #savebtn {
+    margin-top: 50px;
+    margin-left: 50%;
+    background-color: aqua;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    /* display: none; */
+  }
+  #savebtn:hover {
+    color: red;
+    background-color: white;
+    border: 2px solid black;
+  }
