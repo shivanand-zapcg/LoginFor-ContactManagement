@@ -2,8 +2,9 @@ import React from "react";
 import { useState, useEffect ,useCallback} from "react";
 import { useNavigate } from "react-router-dom";
 // import { View } from "./View";
-import { json, Navigate } from "react-router-dom";
+import {Navigate } from "react-router-dom";
 import { BiLogOutCircle } from "react-icons/bi";
+import axios from 'axios';
 import './allcontacts.css';
 
 const AllContacts = () => {
@@ -17,14 +18,29 @@ const AllContacts = () => {
     localStorage.getItem("authenticated")
   );
 
-  const fetchData = useCallback(
+  const fetchData = 
     async () => {
-      const result = await fetch("http://localhost:8080/allContacts")
-      const jsonResult = await result.json();
-      setAllContacts(jsonResult);
-      console.log(jsonResult);
+      // const result = await fetch("http://localhost:8080/allContacts")
+      // const jsonResult = await result.json();
+      // setAllContacts(jsonResult);
+      // console.log(jsonResult);
+
+      const yourJWTToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaGl2YW5hbmQiLCJmaXJzdG5hbWUiOiJTaGl2YW5hbmQiLCJleHAiOjE2NjkxNTg2OTYsImlhdCI6MTY2OTEyMjY5NiwiZW1haWwiOiJTaGl2YW5hbmRAemFwY2cuY29tIiwibGFzdG5hbWUiOiJQYXRpbCJ9.FyjO0YAog7y_3GfilGx12dg0nCGRvz4YCka9Rael5wg"
+      axios.interceptors.request.use(
+        config => {
+          config.headers.authorization = `Bearer ${yourJWTToken}`;
+          return config;
+        },
+        error => {
+          return Promise.reject(error)
+        }
+      );
+     
+      axios.get("http://localhost:8080/allContacts").then((response) => setAllContacts(response.data))
+      
+      
+      
     }
-  )
   useEffect(() => {
     fetchData();
   },[]);
@@ -56,7 +72,7 @@ const AllContacts = () => {
     let id = document.getElementById("idtag");
     let title = document.getElementById("titletag");
     title.focus();
-    let price = document.getElementById("pricetag");
+    let price = document.getElementById("emailtag");
     let category = document.getElementById("cattag");
     id.value = id2;
     title.value = name;
@@ -100,7 +116,6 @@ const result = await fetch('http://localhost:8080/edit', {
     },
     body: JSON.stringify(myData)
   })
-  console.log(result.headers.get("Content-Type"))
   if(result.status==200){
     console.log("TRUE")
   }else{
@@ -162,9 +177,9 @@ if(!authenticated){
        <div className="main-pop">
        <div id="popup">
          <input id="idtag" type="text" placeholder="id" readOnly={true} onChange={(e)=> setContactId(e.target.value)}/>
-         <input id="titletag" type="text" placeholder="Name" onChange={(e)=> setContactName(e.target.value)}/>
-         <input id="pricetag" type="text" placeholder="Email" onChange={(e)=> setContactEmail(e.target.value)}/>
-         <input id="cattag" type="text" placeholder="Number" onChange={(e)=> setContactNumber(e.target.value)} />
+         <input id="titletag" type="text" placeholder="Name" minLength={4} onChange={(e)=> setContactName(e.target.value)}/>
+         <input id="emailtag" type="text" placeholder="Email" minLength={8} onChange={(e)=> setContactEmail(e.target.value)}/>
+         <input id="cattag" type="text" pattern="[0-9]{10}"  maxLength={10} placeholder="Number" onChange={(e)=> setContactNumber(e.target.value)} />
          <button id="close">&times;</button>
          <br />
          <button type="submit" id="savebtn" onClick={() =>{editdata()}}>SAVE</button>

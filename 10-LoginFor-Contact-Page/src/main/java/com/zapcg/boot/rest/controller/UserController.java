@@ -23,7 +23,7 @@ import com.zapcg.boot.rest.entity.User;
 import com.zapcg.boot.rest.repository.UserRepository;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "*")
 public class UserController {
 	
 	@Autowired
