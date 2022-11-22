@@ -1,7 +1,7 @@
 import { useState, useRef,useEffect } from "react";
-import { json, useNavigate } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
 import { CgProfile} from "react-icons/cg";
-import Loginpage from "./Loginpage.css";
+import "./Loginpage.css";
 const Login = () => {
   const navigate = useNavigate();
   const [username, setusername] = useState("");
@@ -10,46 +10,33 @@ const Login = () => {
   const emailInput = useRef();
   const passwordInput = useRef();
   
-  const [authors, setAuthors] = useState()
+  const [users, setUsers] = useState()
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await fetch('http://localhost:8080/users')
+      const result = await fetch('http://localhost:8080/users',{
+        method:'POST'
+      })
       const jsonResult = await result.json()
-      setAuthors(jsonResult)
+      setUsers(jsonResult)
     }
     fetchData()
   }, [])
-  const myData={
-    "username":username,
-    "password":password
-  }
-  
-  // const [jwt , setJwt] = useState("")
-  //  const token = async ()=>{
-  //   await fetch("http://localhost:9090/authenticate",{
-  //     method: 'POST',
-  //     headers :{
-  //       'Content-Type': 'application/json'
-  //     },
-  //     body: JSON.stringify(myData)
-  //   }).then((response) => console.log(response))
-  //   .then((result) => setJwt(result))
-  //   console.log(jwt)
-  //  }
+  // const myData={
+  //   "username":username,
+  //   "password":password
+  // }
   
   const handleSubmit = (e) => {
     e.preventDefault();
    if(true){
-    for(let x in authors){
-        if (username === authors[x].username && password === authors[x].password) {
+    for(let x in users){
+        if (username === users[x].username && password === users[x].password) {
             localStorage.setItem("authenticated", true);
             navigate("/Contact");
             console.log(auth)
           }else{
-            console.log("test")
-            console.log(x)
-            if(x==Object.keys(authors).length-1){
+            if(x===Object.keys(users).length-1){
                 setAuth(true)
                 console.log("test")
             }else{
@@ -59,14 +46,15 @@ const Login = () => {
        }
    }
   };
-
+  function redirectToSaveContact(){
+    navigate("/addUser")
+  }
  
   return (
     <div className="main-div">
       <div className="welcomeh1"><h1>Welcome Back</h1></div>
       <div className="profileicon"><CgProfile/></div>
     <div className="welcomepage">
-     
       <form onSubmit={handleSubmit}>
         <label>Username</label>
         <input
@@ -82,11 +70,26 @@ const Login = () => {
         />
         <p style={auth ? { display: "block" } : { display: "none" }}>Invalid Credentials
         </p>
-        <input id="submitbtn" type="submit" value="Submit" />
+        <input className="submitbtn" type="submit" value="Sign IN" />
+        <input className="submitbtn" value="Sign Up" onClick={redirectToSaveContact}></input>
       </form>
+      
     </div>
     </div>
   );
 };
 
 export default Login;
+  // const [jwt , setJwt] = useState("")
+  //  const token = async ()=>{
+  //   await fetch("http://localhost:9090/authenticate",{
+  //     method: 'POST',
+  //     headers :{
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify(myData)
+  //   }).then((response) => console.log(response))
+  //   .then((result) => setJwt(result))
+  //   console.log(jwt)
+  //  }
+  

@@ -1,6 +1,30 @@
 .divforcontact{
-    background-color: black;
-	height: 100vh;
+	background-color: black;
+    height: 100vh;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+.allcontactinput{
+	margin-top: 50px;
+    margin-right: 380px;
+	border: 1px solid white;
+    padding: 3px 35px;
+    border-radius: 20px;
+}
+.allcontactinput:hover{
+	background-color: yellow;
+	color: black;
+	box-shadow: 0 0 10px white;
+}
+.responseHeader{
+	height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.divforcontact h2{
+	color: wheat;
 }
 small{
 	color: white;
@@ -34,4 +58,13 @@ small{
 	background-color: yellow;
 	color: black;
 	box-shadow: 0 0 10px white;
+}
+.icon{
+    color: red;
+    background-color: black;
+    font-size: 30px;
+    position: absolute;
+    right: 5px;
+    top: 16px;
+    cursor: pointer;
 }

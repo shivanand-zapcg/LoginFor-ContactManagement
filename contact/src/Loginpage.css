@@ -4,11 +4,12 @@ body{
 .main-div{
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    height: 700px;
     display: flex;
     flex-direction: column;
     width: 100%;
-
+    margin-top: -40px;
+    background-color: white;
 }
 .welcomepage{
     display: flex;
@@ -44,7 +45,7 @@ h1{
 .welcomepage label{
     margin-top: 10px;
 }
-#submitbtn{
+.submitbtn{
     margin-top: 50px;
     color: white;
     font-size: 18px;
@@ -54,8 +55,9 @@ h1{
     /* box-shadow: 0px 0px 6px 2px #0000ff; */
     cursor: pointer;
     background: green;
+    text-align: center;
 }
-#submitbtn:hover{
+.submitbtn:hover{
     background-color: #008000cc;
 }
 .welcomepage p{

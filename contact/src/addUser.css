@@ -1,0 +1,54 @@
+.tableforuser{
+    background-color: black;
+    height: 100vh;
+    align-items: center;
+    display: flex;
+
+    flex-direction: column;
+}
+.tableforuser th{
+    color: black;
+}
+.tableforuser h2{
+    color: wheat;
+}
+.tableforuser tr{
+    height: 50px;
+	padding: 3px;
+}
+.tableforuser td, th {
+	padding: 2px;
+}
+.tableforuser th {
+	text-align: left;
+	color: white;
+}
+
+.tableforuser input {
+	padding: 2px;
+	font-size: 18px;
+}
+
+.tableforuser input[type=submit] {
+	padding: 3px 35px;
+	border: 1px solid white;
+	border-radius: 20px;
+}
+
+.tableforuser input[type=submit]:hover {
+	background-color: yellow;
+	color: black;
+	box-shadow: 0 0 10px white;
+}
+.icon{
+    color: red;
+    background-color: black;
+    font-size: 30px;
+    position: absolute;
+    right: 5px;
+    top: 16px;
+    cursor: pointer;
+}
+.responseHeader h2{
+	color: wheat;
+}

@@ -1,7 +1,9 @@
 import React from 'react';
-import { useState, useEffect} from "react";
-import {useNavigate } from "react-router-dom";
-import contact from "./Contact.css";
+import { useState} from "react";
+import {useNavigate, Navigate } from "react-router-dom";
+import "./Contact.css";
+import { BiLogOutCircle } from "react-icons/bi";
+
 
 
 
@@ -11,72 +13,84 @@ const Contact = ()=>{
     const [contactId, setContactId] = useState("");
     const [contactEmail, setContactEmail] = useState("");
     const [contactNumber, setContactNumber] = useState("");
+    const [contactResponse, setContactResponse] = useState("")
+    const [authenticated, setauthenticated] = useState(
+        localStorage.getItem("authenticated")
+      );
 
     const DisplayAllContacts = async ()=>{
         navigate("/allContact");
     }
     const savecontact = async (e) =>{
         e.preventDefault();
-       try{
-        const myData = {
-            "contactId":contactId,
-            "contactName":contactName,
-            "contactEmail":contactEmail,
-            "contactNumber":contactNumber
-        }
-        const result = await fetch('http://localhost:8080/save', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(myData)
-          })
-          console.log(result.headers.get("Content-Type"))
-          if(isJsonString(result)){
-            console.log("TRUE")
-          }else{
-            console.log(result)
-            console.log("FALSE")
-          }
-       }catch(err){
-        console.error(err);
+       if(contactId.length!==0 &&contactName.length!==0 &&contactEmail.length!==0 &&contactNumber.length!==0) {
+        try{
+            const myData = {
+                "contactId":contactId,
+                "contactName":contactName,
+                "contactEmail":contactEmail,
+                "contactNumber":contactNumber
+            }
+            const result = await fetch('http://localhost:8080/save', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(myData)
+              })
+              const output = await result.json();
+              setContactResponse(output)
+              console.log(output)
+           }catch(err){
+            console.error(err);
+           }
+           setContactNumber("")
+           setContactEmail("")
+           setContactId("")
+           setContactName("")
+           console.log(contactResponse)    
+           setTimeout(() => {
+            setContactResponse("")
+           }, 5000);
+       }else{
+        alert("data is not matching requirement")
        }
        
     }
- 
-    function isJsonString(str) {
-        try {
-            JSON.parse(str);
-        } catch (e) {
-            return false;
-        }
-        return true;
+    const logout = ()=>{
+        localStorage.removeItem("authenticated");
+        navigate("/")
     }
-   
-
+  if(!authenticated){
+    return <Navigate replace to="/" />;
+  }else{
     return(
         <div className='divforcontact'>
+         <button className="icon" onClick={logout}><BiLogOutCircle/></button>
         <form onSubmit={DisplayAllContacts} > 
-        <input type="submit" value="Display All Contact"></input>
+        <input type="submit" value="Display All Contact" className='allcontactinput'></input>
         </form>
+        <div className='responseHeader'>
+        <h2>{contactResponse}</h2>
+        </div>
         <form onSubmit={savecontact}>
 		<table className='tableforcontact'>
 			<tr>
 				<th>Contact ID</th>
-				<td><input type="text" autoFocus="autofocus" onChange={e => setContactId(e.target.value)}/></td>
+				<td><input type="text" autoFocus="autofocus" minLength={1} value={contactId} onChange={e => setContactId(e.target.value)}/></td>
 			</tr>
 			<tr>
 				<th>Contact Name</th>
-				<td><input type="text"   onChange={e => setContactName(e.target.value)}/> </td>
+				<td><input type="text"  value={contactName} minLength={5} onChange={e => setContactName(e.target.value)}/> </td>
 			</tr>
 
 			<tr>
 				<th>Contact Email</th>
-				<td><input type="text"  onChange={e => setContactEmail(e.target.value)}/></td>
+				<td><input type="text" value={contactEmail} minLength={8} onChange={e => setContactEmail(e.target.value)}/></td>
 			</tr>
 			<tr>
 				<th>Contact Number</th>
-				<td><input type="text" pattern="[0-9]{10}" minLength={10} maxLength={10}  onChange={e => setContactNumber(e.target.value)}/></td>
+				<td><input type="text" value={contactNumber} pattern="[0-9]{10}"  maxLength={10}  onChange={e => setContactNumber(e.target.value)}/></td>
                 <small>Format:- 1234567890</small>
 			</tr>
 
@@ -87,5 +101,6 @@ const Contact = ()=>{
 	</form>
     </div>
     )
+  }
 };
 export default Contact;
