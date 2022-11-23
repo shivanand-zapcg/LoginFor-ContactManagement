@@ -46,7 +46,7 @@ h1{
     margin-top: 10px;
 }
 .submitbtn{
-    margin-top: 50px;
+    margin-top: 38px;
     color: white;
     font-size: 18px;
     font-weight: 500;
@@ -80,3 +80,7 @@ h1{
     font-size: clamp(2.5rem,6vw,3rem);
     color: #000000d1;
   }
+#check{
+    height: 10px;
+    
+}

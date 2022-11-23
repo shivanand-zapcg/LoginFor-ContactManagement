@@ -86,3 +86,11 @@ body{
     top: 16px;
     cursor: pointer;
 }
+#addconbtn{
+  position: absolute;
+  left: 80px;
+  top: 30px;
+  font-size: 16px;
+  color: red;
+  border-radius: 8px;
+}

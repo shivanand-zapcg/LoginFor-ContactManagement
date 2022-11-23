@@ -53,9 +53,11 @@ public class ContactController {
 
 	@RequestMapping(value = "/save", consumes = { "application/json" })
 	public ResponseEntity<String> saveContact(@RequestBody @Valid Contact contact, BindingResult result) {
-		if (result.hasErrors() || conRepo.existsById(contact.getContactId())) {
-			return new ResponseEntity<String>(gson.toJson("Contact Not Saved"), HttpStatus.BAD_REQUEST);
-		} else {
+		if (result.hasErrors()) {
+			return new ResponseEntity<String>(gson.toJson("Contact Not Saved"), HttpStatus.OK);
+		}else if (conRepo.existsById(contact.getContactId())) {
+			return new ResponseEntity<String>(gson.toJson("Duplicate Contact ID"), HttpStatus.OK);
+		}else {
 			conRepo.save(contact);
 			return new ResponseEntity<String>(gson.toJson("Contact Saved Succesfully"), HttpStatus.OK);
 		}
@@ -63,9 +65,11 @@ public class ContactController {
 
 	@RequestMapping(value = "/edit", consumes = { "application/json" })
 	public ResponseEntity<?> editContact(@RequestBody @Valid Contact contact, BindingResult result) {
-		if (conRepo.existsById(contact.getContactId()) && !result.hasErrors()) {
-			conRepo.save(contact);
+		if (result.hasErrors()) {
 			return new ResponseEntity<Contact>(contact, HttpStatus.OK);
+		}else if (conRepo.existsById(contact.getContactId())) {
+			conRepo.save(contact);
+			return new ResponseEntity<String>("Contact Edited!!", HttpStatus.OK);
 		} else
 			return new ResponseEntity<String>(gson.toJson("No Contact found"), HttpStatus.BAD_REQUEST);
 	}
@@ -83,7 +87,7 @@ public class ContactController {
 			conRepo.delete(contact);
 			return new ResponseEntity<String>(gson.toJson("Contact Deleted Succesfully!!!"), HttpStatus.OK);
 		} else
-			return new ResponseEntity<String>(gson.toJson("No Contact found"), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>(gson.toJson("No Contact found"), HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/allContacts", produces = { "application/json" })

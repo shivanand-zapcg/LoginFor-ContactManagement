@@ -3,9 +3,7 @@ import { useState} from "react";
 import {useNavigate, Navigate } from "react-router-dom";
 import "./Contact.css";
 import { BiLogOutCircle } from "react-icons/bi";
-
-
-
+import axios from 'axios'
 
 const Contact = ()=>{
     const navigate = useNavigate();
@@ -25,22 +23,25 @@ const Contact = ()=>{
         e.preventDefault();
        if(contactId.length!==0 &&contactName.length!==0 &&contactEmail.length!==0 &&contactNumber.length!==0) {
         try{
-            const myData = {
-                "contactId":contactId,
-                "contactName":contactName,
-                "contactEmail":contactEmail,
-                "contactNumber":contactNumber
-            }
-            const result = await fetch('http://localhost:8080/save', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(myData)
-              })
-              const output = await result.json();
-              setContactResponse(output)
-              console.log(output)
+          const myData = {
+            "contactId":contactId,
+            "contactName":contactName,
+            "contactEmail":contactEmail,
+            "contactNumber":contactNumber
+        }
+        axios.interceptors.request.use(
+          config => {
+            config.headers.authorization = `Bearer ${localStorage.getItem("jwt")}`;
+            return config;
+          },
+          error => {
+            return Promise.reject(error)
+          }
+        );
+          const saving = await  axios.post("http://localhost:8080/save",myData)
+           .then((response) => setContactResponse(response.data))
+         .catch(err => console.log(err))
+
            }catch(err){
             console.error(err);
            }
@@ -59,6 +60,7 @@ const Contact = ()=>{
     }
     const logout = ()=>{
         localStorage.removeItem("authenticated");
+        localStorage.removeItem("jwt");
         navigate("/")
     }
   if(!authenticated){
@@ -77,16 +79,16 @@ const Contact = ()=>{
 		<table className='tableforcontact'>
 			<tr>
 				<th>Contact ID</th>
-				<td><input type="text" autoFocus="autofocus" minLength={1} value={contactId} onChange={e => setContactId(e.target.value)}/></td>
+				<td><input type="text" pattern='[0-9]' autoFocus="autofocus" minLength={1} placeholder="Enter Numbers Only" value={contactId} onChange={e => setContactId(e.target.value)}/></td>
 			</tr>
 			<tr>
 				<th>Contact Name</th>
-				<td><input type="text"  value={contactName} minLength={5} onChange={e => setContactName(e.target.value)}/> </td>
+				<td><input type="text"  value={contactName} minLength={5} placeholder="Minimum 5 characters" onChange={e => setContactName(e.target.value)}/> </td>
 			</tr>
 
 			<tr>
 				<th>Contact Email</th>
-				<td><input type="text" value={contactEmail} minLength={8} onChange={e => setContactEmail(e.target.value)}/></td>
+				<td><input type="text" value={contactEmail} minLength={8} placeholder="Minimum 8 characters" onChange={e => setContactEmail(e.target.value)}/></td>
 			</tr>
 			<tr>
 				<th>Contact Number</th>
@@ -104,3 +106,19 @@ const Contact = ()=>{
   }
 };
 export default Contact;
+            // const myData = {
+            //     "contactId":contactId,
+            //     "contactName":contactName,
+            //     "contactEmail":contactEmail,
+            //     "contactNumber":contactNumber
+            // }
+            // const result = await fetch('http://localhost:8080/save', {
+            //     method: 'POST',
+            //     headers: {
+            //       'Content-Type': 'application/json'
+            //     },
+            //     body: JSON.stringify(myData)
+            //   })
+            //   const output = await result.json();
+            //   setContactResponse(output)
+            //   console.log(output)
